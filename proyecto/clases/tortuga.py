@@ -1,4 +1,3 @@
-# clases/tortuga.py
 
 class Tortuga:
     def __init__(self, nombre, edad, especie, peso, color_caparazon):
