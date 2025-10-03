@@ -1,59 +1,55 @@
 import tkinter as tk
 from clases.perro import Perro
+from clases.gato import Gato
 
+def crear_animal(tipo):
+    datos = { 
+        "nombre": entry_nombre.get(),
+        "raza": entry_raza.get(),
+        "edad": entry_edad.get(),
+        "color": entry_color.get(),
+        "peso": entry_peso.get()
+    }
 
-def crear_perro():
-    nombre = entry_nombre.get()
-    raza = entry_raza.get()
-    edad = entry_edad.get()
-    color = entry_color.get()
-    peso = entry_peso.get()
-
-    if not (nombre and raza and edad and color and peso):
-        label_resultado.config(text="⚠️ Todos los campos son obligatorios")
+    if not all(datos.values()):
+        label_resultado.config(text="⚠️ Todos los campos son obligatorios", fg="red")
         return
 
     try:
-        edad = int(edad)
-        peso = float(peso)
+        datos["edad"] = int(datos["edad"])
+        datos["peso"] = float(datos["peso"])
     except ValueError:
-        label_resultado.config(text="⚠️ Edad debe ser entero y peso decimal")
+        label_resultado.config(text="⚠️ Edad debe ser entero y peso decimal", fg="red")
         return
 
-    perro = Perro(nombre, raza, edad, color, peso)
-    label_resultado.config(text=str(perro))   # Mostrar en pantalla
+    if tipo == "perro":
+        animal = Perro(datos["nombre"], datos["raza"], datos["edad"], datos["color"], datos["peso"])
+        color = "green"
+    else:
+        animal = Gato(datos["nombre"], datos["edad"], datos["color"], datos["raza"], datos["peso"])
+        color = "blue"
 
-# Ventana principal
+    label_resultado.config(text=str(animal), fg=color)
+
 root = tk.Tk()
-root.title("Crear Perro")
+root.title("Crear Animal")
+root.geometry("350x300")
 
-# Entradas
-tk.Label(root, text="Nombre:").grid(row=0, column=0, padx=5, pady=5)
-entry_nombre = tk.Entry(root)
-entry_nombre.grid(row=0, column=1)
+campos = ["Nombre", "Raza", "Edad", "Color", "Peso (kg)"]
+entradas = []
 
-tk.Label(root, text="Raza:").grid(row=1, column=0, padx=5, pady=5)
-entry_raza = tk.Entry(root)
-entry_raza.grid(row=1, column=1)
+for i, campo in enumerate(campos):
+    tk.Label(root, text=campo + ":").grid(row=i, column=0, padx=5, pady=5, sticky="e")
+    entry = tk.Entry(root)
+    entry.grid(row=i, column=1)
+    entradas.append(entry)
 
-tk.Label(root, text="Edad:").grid(row=2, column=0, padx=5, pady=5)
-entry_edad = tk.Entry(root)
-entry_edad.grid(row=2, column=1)
+entry_nombre, entry_raza, entry_edad, entry_color, entry_peso = entradas
 
-tk.Label(root, text="Color:").grid(row=3, column=0, padx=5, pady=5)
-entry_color = tk.Entry(root)
-entry_color.grid(row=3, column=1)
+tk.Button(root, text="Crear Perro", command=lambda: crear_animal("perro")).grid(row=5, column=0, pady=10)
+tk.Button(root, text="Crear Gato", command=lambda: crear_animal("gato")).grid(row=5, column=1, pady=10)
 
-tk.Label(root, text="Peso (kg):").grid(row=4, column=0, padx=5, pady=5)
-entry_peso = tk.Entry(root)
-entry_peso.grid(row=4, column=1)
-
-# Botón
-btn_crear = tk.Button(root, text="Crear Perro", command=crear_perro)
-btn_crear.grid(row=5, column=0, columnspan=2, pady=10)
-
-# Resultado
-label_resultado = tk.Label(root, text="", fg="blue", justify="left")
+label_resultado = tk.Label(root, text="", fg="black", justify="left")
 label_resultado.grid(row=6, column=0, columnspan=2, pady=10)
 
 root.mainloop()
