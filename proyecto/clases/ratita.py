@@ -1,33 +1,21 @@
+# proyecto/clases/ratita.py
+
 class Ratita:
-    def __init__(self, nombre="", peso=0.0, edad=0, sintomas="", actividad="Media"):
-        """
-        Clase que representa los datos de una ratita paciente.
-        Los valores por defecto son neutros y pueden ser actualizados después.
-        """
+    def __init__(self, nombre, peso, edad, sintomas, actividad):
         self.nombre = nombre
-        self.peso = peso  # en gramos
-        self.edad = edad  # en meses
+        self.peso = peso  # gramos
+        self.edad = edad  # meses
         self.sintomas = sintomas
-        self.actividad = actividad
+        self.actividad = actividad  # "Alta", "Media", "Baja"
 
-    def actualizar_datos(self, nombre, peso, edad, sintomas, actividad):
-        """
-        Permite actualizar todos los atributos de la ratita.
-        """
-        self.nombre = nombre
-        self.peso = peso
-        self.edad = edad
-        self.sintomas = sintomas
-        self.actividad = actividad
-
-    def obtener_datos(self):
-        """
-        Devuelve un diccionario con los datos actuales de la ratita.
-        """
-        return {
-            "nombre": self.nombre,
-            "peso": self.peso,
-            "edad": self.edad,
-            "sintomas": self.sintomas,
-            "actividad": self.actividad
-        }
+    def evaluar_salud(self):
+        resultado = []
+        if self.peso < 150:
+            resultado.append("⚠️ Peso bajo para una ratita.")
+        if "estornudo" in self.sintomas.lower() or "moco" in self.sintomas.lower():
+            resultado.append("🔬 Posible infección respiratoria.")
+        if self.actividad.lower() == "baja":
+            resultado.append("⚠️ Actividad baja, puede estar enferma.")
+        if not resultado:
+            resultado.append("✅ Ratita en buen estado general.")
+        return resultado
