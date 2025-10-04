@@ -9,7 +9,7 @@ class Tortuga:
 
     def __str__(self):
         return (
-            f"🐢 Información de la Tortuga:\n"
+            f" Información de la Tortuga:\n"
             f"Nombre: {self.nombre}\n"
             f"Edad: {self.edad} años\n"
             f"Especie: {self.especie}\n"
