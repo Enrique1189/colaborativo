@@ -1,4 +1,4 @@
-class pizza:
+class Pizza:
     def __init__(self, tamaño, masa, salsa, ingredientes, precio):
         self.tamaño = tamaño
         self.masa = masa

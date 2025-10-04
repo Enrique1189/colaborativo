@@ -8,10 +8,10 @@ class Bebida:
     
     def mostrar(self):
         return f"Bebida: {self.nombre}"
-        return f"Tipo: {self.tipo}" 
-        return f"Tamaño: {self.tamaño}"
-        return f"Temperatura: {self.temperatura}"
-        return f"Precio: ${self.precio}"
+        f"Tipo: {self.tipo}" 
+        f"Tamaño: {self.tamaño}"
+        f"Temperatura: {self.temperatura}"
+        f"Precio: ${self.precio}"
     
     def prepara(self):
         return f"Preparado tu {self.nombre}, {self.temperatura} en tamaño {self.tamaño}... ¡TU {self.nombre} ESTA LISTO!"
