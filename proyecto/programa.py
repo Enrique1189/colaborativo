@@ -1,9 +1,23 @@
-#Aqui va el codigo de su programa
-#En la carpeta clases iran 5 clases con al menos 5 atributos para mostrar en pantallas
-#Debera generar su rama por equipo.s
-
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
+
+class Combustible:
+    def __init__(self, tipo, octanaje, precio_por_litro, proveedor, origen):
+        self.tipo = tipo
+        self.octanaje = octanaje
+        self.precio_por_litro = precio_por_litro
+        self.proveedor = proveedor
+        self.origen = origen
+
+    def obtener_info(self):
+        return (
+            f"Tipo: {self.tipo}\n"
+            f"Octanaje: {self.octanaje}\n"
+            f"Precio por litro: ${self.precio_por_litro:.2f}\n"
+            f"Proveedor: {self.proveedor}\n"
+            f"Origen: {self.origen}"
+        )
+
 class InteriorAuto:
     def __init__(self, marca, tipo_asientos, material, color, sistema_audio):
         self.marca = marca
@@ -46,6 +60,14 @@ class Velocidad:
         self.tiempo = tiempo
         self.aceleracion = aceleracion
 
+    def obtener_info(self):
+        return (
+            f"Velocidad: {self.valor} {self.unidad}\n"
+            f"Dirección: {self.direccion}\n"
+            f"Tiempo: {self.tiempo} s\n"
+            f"Aceleración: {self.aceleracion} m/s²"
+        )
+
 class Volante:
     def __init__(self, material, diametro, color, tipo, peso):
         self.material = material
@@ -54,7 +76,7 @@ class Volante:
         self.tipo = tipo
         self.peso = peso
 
-    def get_info(self):
+    def obtener_info(self):
         return (
             f"Material: {self.material}\n"
             f"Diámetro: {self.diametro} cm\n"
@@ -63,227 +85,190 @@ class Volante:
             f"Peso: {self.peso} g"
         )
 
-class Combustible:
-    def __init__(self, tipo, octanaje, precio_por_litro, proveedor, origen):
-        self.tipo = tipo
-        self.octanaje = octanaje
-        self.precio_por_litro = precio_por_litro
-        self.proveedor = proveedor
-        self.origen = origen
+def ventana_combustible(root):
+    w = tk.Toplevel(root)
+    w.title("Registro de Combustible")
+    w.geometry("340x340")
 
-    def obtener_info(self):
-        return (
-            f"Tipo: {self.tipo}\n"
-            f"Octanaje: {self.octanaje}\n"
-            f"Precio por litro: ${self.precio_por_litro:.2f}\n"
-            f"Proveedor: {self.proveedor}\n"
-            f"Origen: {self.origen}"
-        )
+    campos = ["Tipo", "Octanaje", "Precio por litro", "Proveedor", "Origen"]
+    entradas = {}
 
-def mostrar_interior():
-    marca = interior_entries['marca'].get()
-    tipo_asientos = interior_entries['tipo_asientos'].get()
-    material = interior_entries['material'].get()
-    color = interior_entries['color'].get()
-    sistema_audio = interior_entries['sistema_de_audio'].get()
+    for campo in campos:
+        tk.Label(w, text=f"{campo}:").pack(anchor="w", padx=10, pady=(8,0))
+        e = tk.Entry(w)
+        e.pack(fill="x", padx=10)
+        entradas[campo] = e
 
-    if not (marca and tipo_asientos and material and color and sistema_audio):
-        messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos del interior.")
-        return
+    def mostrar_info():
+        tipo = entradas["Tipo"].get()
+        octanaje = entradas["Octanaje"].get()
+        precio = entradas["Precio por litro"].get()
+        proveedor = entradas["Proveedor"].get()
+        origen = entradas["Origen"].get()
 
-    interior = InteriorAuto(marca, tipo_asientos, material, color, sistema_audio)
-    info = interior.obtener_info()
-    messagebox.showinfo("Información del Interior del Auto", info)
+        if not (tipo and octanaje and precio and proveedor and origen):
+            messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos.", parent=w)
+            return
 
-def mostrar_llanta():
-    marca = llanta_entries['marca'].get()
-    diametro = llanta_entries['diametro'].get()
-    ancho = llanta_entries['ancho'].get()
-    tipo = llanta_entries['tipo'].get()
-    indice_carga = llanta_entries['indice_de_carga'].get()
+        try:
+            octanaje = int(octanaje)
+            precio = float(precio)
+        except ValueError:
+            messagebox.showerror("Error", "Octanaje debe ser número entero y precio un número decimal.", parent=w)
+            return
 
-    if not (marca and diametro and ancho and tipo and indice_carga):
-        messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos de la llanta.")
-        return
+        c = Combustible(tipo, octanaje, precio, proveedor, origen)
+        messagebox.showinfo("Información del Combustible", c.obtener_info(), parent=w)
 
-    try:
-        diametro = int(diametro)
-        ancho = int(ancho)
-        indice_carga = int(indice_carga)
-    except ValueError:
-        messagebox.showerror("Error de formato", "Diámetro, Ancho e Índice de carga deben ser números.")
-        return
+    tk.Button(w, text="Mostrar información", command=mostrar_info).pack(pady=15)
 
-    llanta = Llanta(marca, diametro, ancho, tipo, indice_carga)
-    info = llanta.obtener_info()
-    messagebox.showinfo("Información de la Llanta", info)
+def ventana_interior(root):
+    w = tk.Toplevel(root)
+    w.title("Registro de Interior")
+    w.geometry("340x340")
 
-def mostrar_velocidad():
-    valor = velocidad_entries['valor'].get()
-    unidad = velocidad_entries['unidad'].get()
-    direccion = velocidad_entries['direccion'].get()
-    tiempo = velocidad_entries['tiempo'].get()
-    aceleracion = velocidad_entries['aceleracion'].get()
+    campos = ["Marca", "Tipo de Asientos", "Material", "Color", "Sistema de Audio"]
+    entradas = {}
 
-    if not (valor and unidad and direccion and tiempo and aceleracion):
-        messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos de velocidad.")
-        return
+    for campo in campos:
+        tk.Label(w, text=f"{campo}:").pack(anchor="w", padx=10, pady=(8,0))
+        e = tk.Entry(w)
+        e.pack(fill="x", padx=10)
+        entradas[campo] = e
 
-    try:
-        valor = float(valor)
-        tiempo = float(tiempo)
-        aceleracion = float(aceleracion)
-    except ValueError:
-        messagebox.showerror("Error de formato", "Valor, Tiempo y Aceleración deben ser números.")
-        return
+    def mostrar_info():
+        valores = [entradas[c].get() for c in campos]
+        if not all(valores):
+            messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos.", parent=w)
+            return
+        interior = InteriorAuto(*valores)
+        messagebox.showinfo("Información del Interior", interior.obtener_info(), parent=w)
 
-    velocidad = Velocidad(valor, unidad, direccion, tiempo, aceleracion)
-    info = (
-        f"Velocidad: {velocidad.valor} {velocidad.unidad}\n"
-        f"Dirección: {velocidad.direccion}\n"
-        f"Tiempo: {velocidad.tiempo} s\n"
-        f"Aceleración: {velocidad.aceleracion} m/s²"
-    )
-    messagebox.showinfo("Información de Velocidad", info)
+    tk.Button(w, text="Mostrar información", command=mostrar_info).pack(pady=15)
 
-def mostrar_volante():
-    material = volante_entries['material'].get()
-    diametro = volante_entries['diametro'].get()
-    color = volante_entries['color'].get()
-    tipo = volante_entries['tipo'].get()
-    peso = volante_entries['peso'].get()
+def ventana_llantas(root):
+    w = tk.Toplevel(root)
+    w.title("Registro de Llantas")
+    w.geometry("340x340")
 
-    if not (material and diametro and color and tipo and peso):
-        messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos del volante.")
-        return
+    campos = ["Marca", "Diámetro", "Ancho", "Tipo", "Índice de carga"]
+    entradas = {}
 
-    try:
-        diametro = float(diametro)
-        peso = float(peso)
-    except ValueError:
-        messagebox.showerror("Error de formato", "Diámetro y Peso deben ser números.")
-        return
+    for campo in campos:
+        tk.Label(w, text=f"{campo}:").pack(anchor="w", padx=10, pady=(8,0))
+        e = tk.Entry(w)
+        e.pack(fill="x", padx=10)
+        entradas[campo] = e
 
-    volante = Volante(material, diametro, color, tipo, peso)
-    info = volante.get_info()
-    messagebox.showinfo("Información del Volante", info)
+    def mostrar_info():
+        marca = entradas["Marca"].get()
+        diametro = entradas["Diámetro"].get()
+        ancho = entradas["Ancho"].get()
+        tipo = entradas["Tipo"].get()
+        indice = entradas["Índice de carga"].get()
 
-def mostrar_combustible():
-    tipo = combustible_entries['tipo'].get()
-    octanaje = combustible_entries['octanaje'].get()
-    precio = combustible_entries['precio_por_litro'].get()
-    proveedor = combustible_entries['proveedor'].get()
-    origen = combustible_entries['origen'].get()
+        if not (marca and diametro and ancho and tipo and indice):
+            messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos.", parent=w)
+            return
 
-    if not (tipo and octanaje and precio and proveedor and origen):
-        messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos de combustible.")
-        return
+        try:
+            diametro = int(diametro)
+            ancho = int(ancho)
+            indice = int(indice)
+        except ValueError:
+            messagebox.showerror("Error", "Diámetro, Ancho e Índice deben ser números.", parent=w)
+            return
 
-    try:
-        octanaje = int(octanaje)
-        precio = float(precio)
-    except ValueError:
-        messagebox.showerror("Error de formato", "Octanaje debe ser entero y precio debe ser número decimal.")
-        return
+        llanta = Llanta(marca, diametro, ancho, tipo, indice)
+        messagebox.showinfo("Información de la Llanta", llanta.obtener_info(), parent=w)
 
-    combustible = Combustible(tipo, octanaje, precio, proveedor, origen)
-    info = combustible.obtener_info()
-    messagebox.showinfo("Información de Combustible", info)
+    tk.Button(w, text="Mostrar información", command=mostrar_info).pack(pady=15)
 
-ventana = tk.Tk()
-ventana.title("Registro de Componentes del Auto")
-ventana.geometry("450x450")
+def ventana_velocidad(root):
+    w = tk.Toplevel(root)
+    w.title("Registro de Velocidad")
+    w.geometry("340x360")
 
-notebook = ttk.Notebook(ventana)
-notebook.pack(expand=True, fill="both")
+    campos = ["Valor", "Unidad", "Dirección", "Tiempo", "Aceleración"]
+    entradas = {}
 
-frame_interior = ttk.Frame(notebook)
-notebook.add(frame_interior, text="Interior Auto")
+    for campo in campos:
+        tk.Label(w, text=f"{campo}:").pack(anchor="w", padx=10, pady=(8,0))
+        e = tk.Entry(w)
+        e.pack(fill="x", padx=10)
+        entradas[campo] = e
 
-interior_labels = ["Marca del Auto:", "Tipo de Asientos:", "Material:", "Color:", "Sistema de Audio:"]
-interior_entries = {}
+    def mostrar_info():
+        valor = entradas["Valor"].get()
+        unidad = entradas["Unidad"].get()
+        direccion = entradas["Dirección"].get()
+        tiempo = entradas["Tiempo"].get()
+        aceleracion = entradas["Aceleración"].get()
 
-for label_text in interior_labels:
-    label = ttk.Label(frame_interior, text=label_text)
-    label.pack(pady=3)
-    entry = ttk.Entry(frame_interior)
-    entry.pack(pady=3, fill='x', padx=20)
-    key = label_text.split(":")[0].lower().replace(" ", "_")
-    interior_entries[key] = entry
+        if not (valor and unidad and direccion and tiempo and aceleracion):
+            messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos.", parent=w)
+            return
 
-btn_interior = ttk.Button(frame_interior, text="Mostrar información", command=mostrar_interior)
-btn_interior.pack(pady=15)
+        try:
+            valor = float(valor)
+            tiempo = float(tiempo)
+            aceleracion = float(aceleracion)
+        except ValueError:
+            messagebox.showerror("Error", "Valor, Tiempo y Aceleración deben ser números.", parent=w)
+            return
 
-frame_llanta = ttk.Frame(notebook)
-notebook.add(frame_llanta, text="Llanta")
+        v = Velocidad(valor, unidad, direccion, tiempo, aceleracion)
+        messagebox.showinfo("Información de la Velocidad", v.obtener_info(), parent=w)
 
-llanta_labels = ["Marca:", "Diámetro (pulgadas):", "Ancho (mm):", "Tipo:", "Índice de carga:"]
-llanta_entries = {}
+    tk.Button(w, text="Mostrar información", command=mostrar_info).pack(pady=15)
 
-for label_text in llanta_labels:
-    label = ttk.Label(frame_llanta, text=label_text)
-    label.pack(pady=3)
-    entry = ttk.Entry(frame_llanta)
-    entry.pack(pady=3, fill='x', padx=20)
-    key = label_text.split(":")[0].lower().replace(" ", "_").replace("í", "i").replace("í", "i").replace("í", "i")
-    if "indice" in key:
-        key = "indice_de_carga"
-    llanta_entries[key] = entry
+def ventana_volante(root):
+    w = tk.Toplevel(root)
+    w.title("Registro de Volante")
+    w.geometry("340x340")
 
-btn_llanta = ttk.Button(frame_llanta, text="Mostrar información", command=mostrar_llanta)
-btn_llanta.pack(pady=15)
+    campos = ["Material", "Diámetro", "Color", "Tipo", "Peso"]
+    entradas = {}
 
-frame_velocidad = ttk.Frame(notebook)
-notebook.add(frame_velocidad, text="Velocidad")
+    for campo in campos:
+        tk.Label(w, text=f"{campo}:").pack(anchor="w", padx=10, pady=(8,0))
+        e = tk.Entry(w)
+        e.pack(fill="x", padx=10)
+        entradas[campo] = e
 
-velocidad_labels = ["Valor:", "Unidad:", "Dirección:", "Tiempo (s):", "Aceleración (m/s²):"]
-velocidad_entries = {}
+    def mostrar_info():
+        material = entradas["Material"].get()
+        diametro = entradas["Diámetro"].get()
+        color = entradas["Color"].get()
+        tipo = entradas["Tipo"].get()
+        peso = entradas["Peso"].get()
 
-for label_text in velocidad_labels:
-    label = ttk.Label(frame_velocidad, text=label_text)
-    label.pack(pady=3)
-    entry = ttk.Entry(frame_velocidad)
-    entry.pack(pady=3, fill='x', padx=20)
-    key = label_text.split(":")[0].lower().replace(" ", "_").replace("(", "").replace(")", "").replace("²", "2")
-    velocidad_entries[key] = entry
+        if not (material and diametro and color and tipo and peso):
+            messagebox.showwarning("Campos incompletos", "Por favor, completa todos los campos.", parent=w)
+            return
 
-btn_velocidad = ttk.Button(frame_velocidad, text="Mostrar información", command=mostrar_velocidad)
-btn_velocidad.pack(pady=15)
+        try:
+            diametro = float(diametro)
+            peso = float(peso)
+        except ValueError:
+            messagebox.showerror("Error", "Diámetro y Peso deben ser números.", parent=w)
+            return
 
-frame_volante = ttk.Frame(notebook)
-notebook.add(frame_volante, text="Volante")
+        vol = Volante(material, diametro, color, tipo, peso)
+        messagebox.showinfo("Información del Volante", vol.obtener_info(), parent=w)
 
-volante_labels = ["Material:", "Diámetro (cm):", "Color:", "Tipo:", "Peso (g):"]
-volante_entries = {}
+    tk.Button(w, text="Mostrar información", command=mostrar_info).pack(pady=15)
 
-for label_text in volante_labels:
-    label = ttk.Label(frame_volante, text=label_text)
-    label.pack(pady=3)
-    entry = ttk.Entry(frame_volante)
-    entry.pack(pady=3, fill='x', padx=20)
-    key = label_text.split(":")[0].lower().replace(" ", "_").replace("(", "").replace(")", "").replace("²", "2")
-    volante_entries[key] = entry
+root = tk.Tk()
+root.title("Proyecto - Componentes del Auto")
+root.geometry("400x420")
 
-btn_volante = ttk.Button(frame_volante, text="Mostrar información", command=mostrar_volante)
-btn_volante.pack(pady=15)
+tk.Label(root, text="Selecciona un componente", font=("Arial", 16, "bold")).pack(pady=20)
 
-frame_combustible = ttk.Frame(notebook)
-notebook.add(frame_combustible, text="Combustible")
+tk.Button(root, text="Combustible", width=25, command=lambda: ventana_combustible(root)).pack(pady=8)
+tk.Button(root, text="Interior del Auto", width=25, command=lambda: ventana_interior(root)).pack(pady=8)
+tk.Button(root, text="Llantas", width=25, command=lambda: ventana_llantas(root)).pack(pady=8)
+tk.Button(root, text="Velocidad", width=25, command=lambda: ventana_velocidad(root)).pack(pady=8)
+tk.Button(root, text="Volante", width=25, command=lambda: ventana_volante(root)).pack(pady=8)
 
-combustible_labels = ["Tipo:", "Octanaje:", "Precio por litro:", "Proveedor:", "Origen:"]
-combustible_entries = {}
-
-for label_text in combustible_labels:
-    label = ttk.Label(frame_combustible, text=label_text)
-    label.grid(row=combustible_labels.index(label_text), column=0, sticky="w", padx=10, pady=5)
-    entry = ttk.Entry(frame_combustible)
-    entry.grid(row=combustible_labels.index(label_text), column=1, padx=10, pady=5, sticky="ew")
-    key = label_text.split(":")[0].lower().replace(" ", "_")
-    combustible_entries[key] = entry
-
-frame_combustible.columnconfigure(1, weight=1)
-
-btn_combustible = ttk.Button(frame_combustible, text="Mostrar información", command=mostrar_combustible)
-btn_combustible.grid(row=len(combustible_labels), column=0, columnspan=2, pady=15)
-
-ventana.mainloop()
+root.mainloop()
