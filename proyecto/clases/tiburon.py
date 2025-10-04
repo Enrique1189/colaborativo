@@ -1,4 +1,4 @@
-# clases/tiburon.py
+# clases/tiburon.pyy
 
 class Tiburon:
     def __init__(self, nombre, edad, especie, longitud, peso):
