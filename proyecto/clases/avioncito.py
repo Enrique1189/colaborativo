@@ -16,4 +16,11 @@ class AvioncitoDeJuguete:
     def mostrar_info(self):
         return (f"Avioncito de juguete - Marca: {self.marca}, Modelo: {self.modelo}, "
                 f"Color: {self.color}, Tamaño: {self.tamaño}, Material: {self.material}")
+        
+        
+# Ejemplo de uso
+avioncito1 = AvioncitoDeJuguete("Rojo", "Pequeño", "Plástico", "ToyAir", "X100")
+print(avioncito1.mostrar_info())
+print(avioncito1.volar())
+print(avioncito1.aterrizar())
     
