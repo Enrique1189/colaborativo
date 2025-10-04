@@ -1,15 +1,19 @@
-class Avioncito:
-    def __init__(self, modelo, capacidad):
+#5 atributos y 3 métodos
+class AvioncitoDeJuguete:
+    def __init__(self, color, tamaño, material, marca, modelo):
+        self.color = color
+        self.tamaño = tamaño
+        self.material = material
+        self.marca = marca
         self.modelo = modelo
-        self.capacidad = capacidad
 
-    def despegar(self):
-        return f"El avión {self.modelo} está despegando."
+    def volar(self):
+        return f"El avioncito {self.marca} está volando."
 
     def aterrizar(self):
-        return f"El avión {self.modelo} está aterrizando."
+        return f"El avioncito {self.marca} ha aterrizado."
 
-
-
-    def __str__(self):
-        return f"Avión Modelo: {self.modelo}, Capacidad: {self.capacidad} pasajeros"
+    def mostrar_info(self):
+        return (f"Avioncito de juguete - Marca: {self.marca}, Modelo: {self.modelo}, "
+                f"Color: {self.color}, Tamaño: {self.tamaño}, Material: {self.material}")
+    
