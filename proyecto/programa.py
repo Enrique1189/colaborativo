@@ -2,6 +2,9 @@
 #En la carpeta clases iran 5 clases con al menos 5 atributos para mostrar en pantallas
 #Debera generar su rama por equipo.s
 
+from clases import Avion
+from clases import Pastel
+
 import tkinter as tk
 from tkinter import ttk
 
@@ -24,6 +27,32 @@ class Avion:
         )
 
 
+class Pastel:
+    def __init__(self, tamaño, sabor, decoración, capas, tipo_glaseado, color):
+        self.tamaño = tamaño         
+        self.sabor = sabor            
+        self.decoración = decoración  
+        self.capas = capas            
+        self.tipo_glaseado = tipo_glaseado 
+        self.color = color           
+    
+    def preparar(self):
+        print(f"Preparar el pastel {self.color} de {self.sabor}...")
+    
+    def decorar(self):
+        print(f"Decorar el pastel con {self.decoración} y {self.capas} capas.")
+    
+    def aplicar_glasé(self):
+        print(f"Añadir glaseado de {self.tipo_glaseado} al pastel.")
+    
+    def servir(self):
+        print(f"Un pastel {self.color} de tamaño {self.tamaño}, con {self.capas} capas y glaseado de {self.tipo_glaseado} está por servirse. ;)")
+
+    def mostrar_info(self):
+        return f"Pastel {self.color}:\nTamaño: {self.tamaño}\nSabor: {self.sabor}\nDecoración: {self.decoración}\nCapas: {self.capas}\nTipo de glaseado: {self.tipo_glaseado}\nColor: {self.color}"
+
+
+
 Avion_American_Airlines = Avion(
     "Personas y maletas",
     "Entre 150 y 180 personas y más de 100 kg de equipaje",
@@ -41,33 +70,86 @@ Avion_United_Airlines = Avion(
 )
 
 
-root = tk.Tk()
-root.title("Información de Aviones")
-root.geometry("500x400")
-root.configure(bg="#2c3e50") 
+def mostrar_avion(avion):
+    text_area.config(state="normal")
+    text_area.delete("1.0", tk.END)
+    text_area.insert(tk.END, avion.mostrar_info())
+    text_area.config(state="disabled")
 
 
-title_label = tk.Label(
-    root, text="Aviones", 
-    font=("Helvetica", 20, "bold"), fg="white", bg="#2c3e50"
+def crear_pastel():
+    tamaño = entry_tamaño.get()
+    sabor = entry_sabor.get()
+    decoración = entry_decoración.get()
+    capas = int(entry_capas.get())
+    tipo_glaseado = entry_glaseado.get()
+    color = entry_color.get()
+
+    pastel = Pastel(tamaño, sabor, decoración, capas, tipo_glaseado, color)
+
+    text_area.config(state="normal")
+    text_area.delete("1.0", tk.END)
+    text_area.insert(tk.END, pastel.mostrar_info())
+    text_area.config(state="disabled")
+    
+
+ventana = tk.Tk()
+ventana.title("Información de Aviones y Pasteles")
+ventana.geometry("800x600")
+ventana.configure(bg="#2c3e50")
+
+frame_aviones = tk.Frame(ventana, bg="#34495e", padx=20, pady=10)
+frame_aviones.pack(fill="x", padx=10, pady=10)
+
+title_label_aviones = tk.Label(
+    frame_aviones, text="Información de Aviones", font=("Helvetica", 16, "bold"), fg="white", bg="#34495e"
 )
-title_label.pack(pady=15)
+title_label_aviones.pack(pady=5)
 
+button_frame_aviones = tk.Frame(frame_aviones, bg="#34495e")
+button_frame_aviones.pack(pady=10, fill="x")
 
-button_frame = tk.Frame(root, bg="#34495e")
-button_frame.pack(pady=10, fill="x", padx=20)
+btn_american = ttk.Button(button_frame_aviones, text="Avión American Airlines", command=lambda: mostrar_avion(Avion_American_Airlines))
+btn_american.pack(side="left", expand=True, padx=10)
 
+btn_united = ttk.Button(button_frame_aviones, text="Avión United Airlines", command=lambda: mostrar_avion(Avion_United_Airlines))
+btn_united.pack(side="left", expand=True, padx=10)
 
-style = ttk.Style()
-style.theme_use('clam')
-style.configure("TButton", font=("Arial", 12), padding=10, foreground="#34495e")
-style.map("TButton",
-    foreground=[('active', '#2980b9')],
-    background=[('active', '#ecf0f1')]
+frame_pasteles = tk.Frame(ventana, bg="#34495e", padx=20, pady=10)
+frame_pasteles.pack(fill="x", padx=10, pady=10)
+
+title_label_pasteles = tk.Label(
+    frame_pasteles, text="Crear tu Pastel", font=("Helvetica", 16, "bold"), fg="white", bg="#34495e"
 )
+title_label_pasteles.pack(pady=5)
 
+tk.Label(frame_pasteles, text="Tamaño:", bg="#34495e", fg="white").pack()
+entry_tamaño = tk.Entry(frame_pasteles)
+entry_tamaño.pack()
 
-text_frame = tk.Frame(root)
+tk.Label(frame_pasteles, text="Sabor:", bg="#34495e", fg="white").pack()
+entry_sabor = tk.Entry(frame_pasteles)
+entry_sabor.pack()
+
+tk.Label(frame_pasteles, text="Decoración:", bg="#34495e", fg="white").pack()
+entry_decoración = tk.Entry(frame_pasteles)
+entry_decoración.pack()
+
+tk.Label(frame_pasteles, text="Capas:", bg="#34495e", fg="white").pack()
+entry_capas = tk.Entry(frame_pasteles)
+entry_capas.pack()
+
+tk.Label(frame_pasteles, text="Tipo de glaseado:", bg="#34495e", fg="white").pack()
+entry_glaseado = tk.Entry(frame_pasteles)
+entry_glaseado.pack()
+
+tk.Label(frame_pasteles, text="Color:", bg="#34495e", fg="white").pack()
+entry_color = tk.Entry(frame_pasteles)
+entry_color.pack()
+
+tk.Button(frame_pasteles, text="Crear Pastel", command=crear_pastel).pack(pady=10)
+
+text_frame = tk.Frame(ventana)
 text_frame.pack(pady=20, padx=20, fill="both", expand=True)
 
 text_area = tk.Text(
@@ -79,20 +161,7 @@ scrollbar = ttk.Scrollbar(text_frame, command=text_area.yview)
 scrollbar.pack(side="right", fill="y")
 
 text_area.config(yscrollcommand=scrollbar.set)
-text_area.insert("1.0", "Selecciona un avión para mostrar su información.")
+text_area.insert("1.0", "Selecciona un avión o crea un pastel para mostrar su información.")
 text_area.config(state="disabled")
 
-def mostrar_avion(avion):
-    text_area.config(state="normal")
-    text_area.delete("1.0", tk.END)
-    text_area.insert(tk.END, avion.mostrar_info())
-    text_area.config(state="disabled")
-
-
-btn_american = ttk.Button(button_frame, text="Avión American Airlines", command=lambda: mostrar_avion(Avion_American_Airlines))
-btn_american.pack(side="left", expand=True, padx=10)
-
-btn_united = ttk.Button(button_frame, text="Avión United Airlines", command=lambda: mostrar_avion(Avion_United_Airlines))
-btn_united.pack(side="left", expand=True, padx=10)
-
-root.mainloop()
+ventana.mainloop()
