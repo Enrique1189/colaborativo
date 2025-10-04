@@ -1,8 +1,6 @@
 #Aqui va el codigo de su programa
 #En la carpeta clases iran 5 clases con al menos 5 atributos para mostrar en pantallas
 #Debera generar su rama por equipo.s
-<<<<<<< HEAD
-# app.py
 import tkinter as tk
 from tkinter import messagebox
 
@@ -24,35 +22,10 @@ class Lobo:
                 f"Tamaño: {self.tamaño}\n"
                 f"Velocidad: {self.velocidad} km/h")
 
-lobo = Lobo("Akela", 7, "Gris oscuro", "Grande", 60.5)
-
-def mostrar_info():
-    texto_resultado.set(lobo.describir())
-
-def aullar():
-    messagebox.showinfo("Aullido", lobo.aullar())
-
-ventana = tk.Tk()
-ventana.title("Información del Lobo")
-ventana.geometry("400x300")
-
-tk.Label(ventana, text="Lobo predefinido", font=("Arial", 12, "bold")).pack(pady=10)
-
-tk.Button(ventana, text="Mostrar Información", command=mostrar_info).pack(pady=5)
-tk.Button(ventana, text="Aullar", command=aullar).pack(pady=5)
-
-texto_resultado = tk.StringVar()
-tk.Label(ventana, textvariable=texto_resultado, justify="left", wraplength=350).pack(pady=10)
-
-ventana.mainloop()
-
-=======
-import tkinter as tk
-
 class Gato:
     def __init__(self):
         self.ventana = tk.Tk()
-        self.ventana.title(" GATO")
+        self.ventana.title("GATO")
         self.ventana.geometry("500x600")
 
         self.crear_caracteristicas()
@@ -62,7 +35,6 @@ class Gato:
 
         btn_mostrar = tk.Button(self.ventana, text="Mostrar", command=self.mostrar_datos, bg="blue", fg="white")
         btn_mostrar.pack(pady=5)
-
 
         self.resultado = tk.Label(self.ventana, text="", font=("Arial", 10), justify="left")
         self.resultado.pack(pady=10)
@@ -96,6 +68,139 @@ class Gato:
         )
         self.resultado.config(text=texto)
 
+class Aguila:
+    def __init__(self):
+        self.ventana = tk.Tk()
+        self.ventana.title("ÁGUILA")
+        self.ventana.geometry("500x600")
 
-gato = Gato()
->>>>>>> 06d2c9e8767e4b822119e48546ef3100759ae011
+        self.crear_caracteristicas()
+
+        btn_guardar = tk.Button(self.ventana, text="Guardar", command=self.guardar_datos, bg="green", fg="white")
+        btn_guardar.pack(pady=10)
+
+        btn_mostrar = tk.Button(self.ventana, text="Mostrar", command=self.mostrar_datos, bg="blue", fg="white")
+        btn_mostrar.pack(pady=5)
+
+        self.resultado = tk.Label(self.ventana, text="", font=("Arial", 10), justify="left")
+        self.resultado.pack(pady=10)
+
+        self.ventana.mainloop()
+
+    def crear_caracteristicas(self):
+        self.entradas = {}
+
+        campos = ["Nombre", "Color de Plumaje", "Edad", "Envergadura", "Sonido"]
+        for campo in campos:
+            tk.Label(self.ventana, text=f"{campo}:", font=("Arial", 11)).pack()
+            entrada = tk.Entry(self.ventana)
+            entrada.pack()
+            self.entradas[campo.lower().replace(" ", "_")] = entrada  
+
+    def guardar_datos(self):
+        self.nombre = self.entradas["nombre"].get()
+        self.color_plumaje = self.entradas["color_de_plumaje"].get()
+        self.edad = self.entradas["edad"].get()
+        self.envergadura = self.entradas["envergadura"].get()
+        self.sonido = self.entradas["sonido"].get()
+
+    def mostrar_datos(self):
+        texto = (
+            f"Nombre: {self.nombre}\n"
+            f"Color de Plumaje: {self.color_plumaje}\n"
+            f"Edad: {self.edad} años\n"
+            f"Envergadura: {self.envergadura} metros\n"
+            f"Sonido: {self.sonido}"
+        )
+        self.resultado.config(text=texto)
+class Leon:
+    def __init__(self):
+        self.ventana = tk.Tk()
+        self.ventana.title("LEÓN")
+        self.ventana.geometry("500x600")
+
+        self.crear_caracteristicas()
+
+        btn_guardar = tk.Button(self.ventana, text="Guardar", command=self.guardar_datos, bg="green", fg="white")
+        btn_guardar.pack(pady=10)
+
+        btn_mostrar = tk.Button(self.ventana, text="Mostrar", command=self.mostrar_datos, bg="blue", fg="white")
+        btn_mostrar.pack(pady=5)
+
+        self.resultado = tk.Label(self.ventana, text="", font=("Arial", 10), justify="left")
+        self.resultado.pack(pady=10)
+
+        self.ventana.mainloop()
+
+    def crear_caracteristicas(self):
+        self.entradas = {}
+
+        campos = ["Nombre", "Color de Pelaje", "Edad", "Tamaño", "Rugido"]
+        for campo in campos:
+            tk.Label(self.ventana, text=f"{campo}:", font=("Arial", 11)).pack()
+            entrada = tk.Entry(self.ventana)
+            entrada.pack()
+            self.entradas[campo.lower().replace(" ", "_")] = entrada  
+
+    def guardar_datos(self):
+        self.nombre = self.entradas["nombre"].get()
+        self.color_pelaje = self.entradas["color_de_pelaje"].get()
+        self.edad = self.entradas["edad"].get()
+        self.tamaño = self.entradas["tamaño"].get()
+        self.rugido = self.entradas["rugido"].get()
+
+    def mostrar_datos(self):
+        texto = (
+            f"Nombre: {self.nombre}\n"
+            f"Color de Pelaje: {self.color_pelaje}\n"
+            f"Edad: {self.edad} años\n"
+            f"Tamaño: {self.tamaño}\n"
+            f"Rugido: {self.rugido}"
+        )
+        self.resultado.config(text=texto)
+
+class Tigre:
+    def __init__(self):
+        self.ventana = tk.Tk()
+        self.ventana.title("TIGRE")
+        self.ventana.geometry("500x600")
+
+        self.crear_caracteristicas()
+
+        btn_guardar = tk.Button(self.ventana, text="Guardar", command=self.guardar_datos, bg="green", fg="white")
+        btn_guardar.pack(pady=10)
+
+        btn_mostrar = tk.Button(self.ventana, text="Mostrar", command=self.mostrar_datos, bg="blue", fg="white")
+        btn_mostrar.pack(pady=5)
+
+        self.resultado = tk.Label(self.ventana, text="", font=("Arial", 10), justify="left")
+        self.resultado.pack(pady=10)
+
+        self.ventana.mainloop()
+
+    def crear_caracteristicas(self):
+        self.entradas = {}
+
+        campos = ["Nombre", "Color de Pelaje", "Edad", "Tamaño", "Rugido"]
+        for campo in campos:
+            tk.Label(self.ventana, text=f"{campo}:", font=("Arial", 11)).pack()
+            entrada = tk.Entry(self.ventana)
+            entrada.pack()
+            self.entradas[campo.lower().replace(" ", "_")] = entrada  
+
+    def guardar_datos(self):
+        self.nombre = self.entradas["nombre"].get()
+        self.color_pelaje = self.entradas["color_de_pelaje"].get()
+        self.edad = self.entradas["edad"].get()
+        self.tamaño = self.entradas["tamaño"].get()
+        self.rugido = self.entradas["rugido"].get()
+
+    def mostrar_datos(self):
+        texto = (
+            f"Nombre: {self.nombre}\n"
+            f"Color de Pelaje: {self.color_pelaje}\n"
+            f"Edad: {self.edad} años\n"
+            f"Tamaño: {self.tamaño}\n"
+            f"Rugido: {self.rugido}"
+        )
+        self.resultado.config(text=texto)
