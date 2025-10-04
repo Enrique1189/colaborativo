@@ -3,6 +3,7 @@ from clases.perro import Perro
 from clases.gato import Gato
 from clases.tortuga import Tortuga
 from clases.tiburon import Tiburon
+from clases.cocodrilo import Cocodrilo
 
 def crear_animal(tipo):
     nombre = entry_nombre.get()
