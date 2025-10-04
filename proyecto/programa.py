@@ -1,5 +1,6 @@
 #Aqui va el codigo de su programa
 #En la carpeta clases iran 5 clases con al menos 5 atributos para mostrar en pantallas
+<<<<<<< HEAD
 #Debera generar su rama por equipo.
 import tkinter as tk
 from tkinter import ttk, scrolledtext
@@ -63,3 +64,6 @@ salida = scrolledtext.ScrolledText(frame, width=60, height=25)
 salida.grid(row=1, column=0)
 
 root.mainloop()
+=======
+#Debera generar su rama por equipo.s
+>>>>>>> 5334bddad523baac1eb4babaee07dfd29af54742
