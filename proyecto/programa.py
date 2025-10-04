@@ -10,12 +10,13 @@ from clases.perro import Perro
 from clases.ratita import Ratita
 
 def actualizar_campos(event=None):
+    # Limpia los campos previos
     for widget in campos_frame.winfo_children():
         widget.destroy()
 
     animal = combo_animal.get()
 
-    global entradas 
+    global entradas  # Para acceder a los valores después
     entradas = {}
 
     if animal == "Gato":
@@ -134,6 +135,7 @@ root.title("Evaluación de Salud de Mascotas")
 frame = ttk.Frame(root, padding=10)
 frame.grid(row=0, column=0)
 
+# Selector de animal
 ttk.Label(frame, text="Selecciona el animal:").grid(row=0, column=0, sticky="w")
 combo_animal = ttk.Combobox(frame, values=["Gato", "Hamster", "Pájaro", "Perro", "Ratita"], state="readonly")
 combo_animal.grid(row=0, column=1)
