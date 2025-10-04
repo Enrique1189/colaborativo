@@ -2,15 +2,16 @@ import tkinter as tk
 from clases.perro import Perro
 from clases.gato import Gato
 from clases.tortuga import Tortuga
+from clases.tiburon import Tiburon
 
 def crear_animal(tipo):
     nombre = entry_nombre.get()
     edad = entry_edad.get()
     extra1 = entry_extra1.get()
-    peso = entry_peso.get()
     extra2 = entry_extra2.get()
+    peso = entry_peso.get()
 
-    if not all([nombre, edad, extra1, peso, extra2]):
+    if not all([nombre, edad, extra1, extra2, peso]):
         label_resultado.config(text="⚠️ Todos los campos son obligatorios", fg="red")
         return
 
@@ -30,6 +31,15 @@ def crear_animal(tipo):
     elif tipo == "tortuga":
         animal = Tortuga(nombre, edad, extra1, peso, extra2)
         color = "brown"
+    elif tipo == "tiburon":
+        # Para tiburon, extra1 = especie, extra2 = longitud
+        try:
+            longitud = float(extra2)
+        except ValueError:
+            label_resultado.config(text="⚠️ Longitud debe ser un número decimal", fg="red")
+            return
+        animal = Tiburon(nombre, edad, extra1, longitud, peso)
+        color = "darkblue"
     else:
         label_resultado.config(text="Tipo de animal no válido", fg="red")
         return
@@ -49,11 +59,15 @@ def actualizar_labels(tipo):
         label_extra1.config(text="Especie:")
         label_extra2.config(text="Color caparazón:")
         btn_crear.config(command=lambda: crear_animal("tortuga"))
+    elif tipo == "tiburon":
+        label_extra1.config(text="Especie:")
+        label_extra2.config(text="Longitud (m):")
+        btn_crear.config(command=lambda: crear_animal("tiburon"))
 
-# Interfaz
+# Ventana principal
 root = tk.Tk()
 root.title("Crear Animal")
-root.geometry("400x400")
+root.geometry("420x420")
 
 # Entradas comunes
 tk.Label(root, text="Nombre:").grid(row=0, column=0, padx=5, pady=5, sticky="e")
@@ -69,29 +83,30 @@ label_extra1.grid(row=2, column=0, padx=5, pady=5, sticky="e")
 entry_extra1 = tk.Entry(root)
 entry_extra1.grid(row=2, column=1)
 
-tk.Label(root, text="Peso (kg):").grid(row=3, column=0, padx=5, pady=5, sticky="e")
-entry_peso = tk.Entry(root)
-entry_peso.grid(row=3, column=1)
-
 label_extra2 = tk.Label(root, text="Extra2:")
-label_extra2.grid(row=4, column=0, padx=5, pady=5, sticky="e")
+label_extra2.grid(row=3, column=0, padx=5, pady=5, sticky="e")
 entry_extra2 = tk.Entry(root)
-entry_extra2.grid(row=4, column=1)
+entry_extra2.grid(row=3, column=1)
 
-# Selector de tipo de animal
+tk.Label(root, text="Peso (kg):").grid(row=4, column=0, padx=5, pady=5, sticky="e")
+entry_peso = tk.Entry(root)
+entry_peso.grid(row=4, column=1)
+
+# Botones selector de animal
 frame_botones = tk.Frame(root)
 frame_botones.grid(row=5, column=0, columnspan=2, pady=10)
 
-tk.Button(frame_botones, text="🐶 Perro", command=lambda: actualizar_labels("perro")).grid(row=0, column=0, padx=5)
-tk.Button(frame_botones, text="🐱 Gato", command=lambda: actualizar_labels("gato")).grid(row=0, column=1, padx=5)
-tk.Button(frame_botones, text="🐢 Tortuga", command=lambda: actualizar_labels("tortuga")).grid(row=0, column=2, padx=5)
+tk.Button(frame_botones, text=" Perro", command=lambda: actualizar_labels("perro")).grid(row=0, column=0, padx=5)
+tk.Button(frame_botones, text=" Gato", command=lambda: actualizar_labels("gato")).grid(row=0, column=1, padx=5)
+tk.Button(frame_botones, text=" Tortuga", command=lambda: actualizar_labels("tortuga")).grid(row=0, column=2, padx=5)
+tk.Button(frame_botones, text=" Tiburón", command=lambda: actualizar_labels("tiburon")).grid(row=0, column=3, padx=5)
 
 # Botón Crear
 btn_crear = tk.Button(root, text="Crear Animal", state="normal")
 btn_crear.grid(row=6, column=0, columnspan=2, pady=10)
 
 # Resultado
-label_resultado = tk.Label(root, text="", fg="black", justify="left", wraplength=350)
+label_resultado = tk.Label(root, text="", fg="black", justify="left", wraplength=380)
 label_resultado.grid(row=7, column=0, columnspan=2, pady=10)
 
 root.mainloop()
