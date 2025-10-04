@@ -10,7 +10,7 @@ class Gato:
         sintomas_bajos = self.sintomas.lower()
         evaluacion = []
 
-        if "vómito" in sintomas_bajos or "diarrea" in sintomas_bajos:
+        if "vomito" in sintomas_bajos or "diarrea" in sintomas_bajos:
             evaluacion.append("Posibles problemas gastrointestinales.")
         elif "no come" in sintomas_bajos or "letárgico" in sintomas_bajos:
             evaluacion.append("Síntomas de posible enfermedad grave.")
