@@ -1,4 +1,4 @@
-class Aguila:
+class aguila:
     def __init__(self, nombre, edad, envergadura, velocidad, habitat):
         self.nombre = nombre            
         self.edad = edad               
@@ -7,12 +7,10 @@ class Aguila:
         self.habitat = habitat        
 
     def mostrar_info(self):
-        print(f"Águila: {self.nombre}")
-        print(f"Edad: {self.edad} años")
-        print(f"Envergadura: {self.envergadura} cm")
-        print(f"Velocidad máxima: {self.velocidad} km/h")
-        print(f"Hábitat: {self.habitat}")
-
-
-aguila1 = Aguila("Águila Real", 5, 220, 160, "Montañas")
-aguila1.mostrar_info()
+        return (
+            f"Águila: {self.nombre}\n"
+            f"Edad: {self.edad} años\n"
+            f"Envergadura: {self.envergadura} cm\n"
+            f"Velocidad máxima: {self.velocidad} km/h\n"
+            f"Hábitat: {self.habitat}"
+        )
