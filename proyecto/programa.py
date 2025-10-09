@@ -13,7 +13,7 @@ class Avion:
         self.tamaño = tamaño
         self.modelo = modelo
         self.color = color
-    
+
     def mostrar_info(self):
         return (
             f"--- Información de avión ---\n"
@@ -24,7 +24,6 @@ class Avion:
             f"Color: {self.color}\n"
         )
 
-
 class Pastel:
     def __init__(self, tamaño, sabor, decoración, capas, tipo_glaseado, color):
         self.tamaño = tamaño
@@ -33,7 +32,7 @@ class Pastel:
         self.capas = capas
         self.tipo_glaseado = tipo_glaseado
         self.color = color
-    
+
     def mostrar_info(self):
         return (
             f"--- Información del Pastel ---\n"
@@ -44,7 +43,6 @@ class Pastel:
             f"Tipo de glaseado: {self.tipo_glaseado}\n"
             f"Color: {self.color}\n"
         )
-
 
 class Coche:
     def __init__(self, marca, modelo, color):
@@ -64,116 +62,113 @@ class Coche:
     def mostrar_info(self):
         return f"{self.marca} {self.modelo} | Color: {self.color} | Velocidad: {self.velocidad} km/h"
 
+class Celular:
+    def __init__(self, marca, costo, vida):
+        self.marca = marca
+        self.costo = costo 
+        self.tiempo_vida = vida
+
+    def get_info(self):
+        return f"--- Información de Celular ---\nMarca: {self.marca}\nCosto: {self.costo}\nVida útil: {self.tiempo_vida}"
+
+
+Avion_American = Avion(
+    "Personas y maletas",
+    "Entre 150 y 180 personas y más de 100 kg de equipaje",
+    "38m",
+    "Airbus A320",
+    "Blanco con azul"
+)
+
+pastel_especial = Pastel("Mediano", "Chocolate", "Frutas", 3, "Vainilla", "Café")
+
+coche1 = Coche("Lamborghini", "Huracán", "Rojo")
+coche2 = Coche("Honda", "Civic", "Azul")
+
+celulares = [
+    Celular("sansung_galaxy", "1500 pesos", "20 años"),
+    Celular("oppo", "20 dólares", "1 año"),
+    Celular("wawey", "1 peso boliviano XD", "1 microsegundo"),
+    Celular("nokia", "5 pesos", "durará más que tú XD"),
+    Celular("ipone", "10,000,000 de pesos", "cuando lo saques de la caja")
+]
+
 
 def mostrar_avion(avion):
-    text_area.config(state="normal")
-    text_area.delete("1.0", tk.END)
-    text_area.insert(tk.END, avion.mostrar_info())
-    text_area.config(state="disabled")
+    actualizar_text_area(avion.mostrar_info())
 
-
-def mostrar_pastel_especifico():
-    pastel_especial = Pastel(
-        tamaño="Mediano",
-        sabor="Chocolate",
-        decoración="Frutas",
-        capas=3,
-        tipo_glaseado="Vainilla",
-        color="Café"
-    )
-    text_area.config(state="normal")
-    text_area.delete("1.0", tk.END)
-    text_area.insert(tk.END, pastel_especial.mostrar_info())
-    text_area.config(state="disabled")
-
+def mostrar_pastel():
+    actualizar_text_area(pastel_especial.mostrar_info())
 
 def mostrar_info_coche(coche, etiqueta):
     etiqueta.config(text=coche.mostrar_info())
-
 
 def acelerar_coche(coche, etiqueta):
     coche.acelerar(10)
     mostrar_info_coche(coche, etiqueta)
 
-
 def frenar_coche(coche, etiqueta):
     coche.frenar(10)
     mostrar_info_coche(coche, etiqueta)
 
+def mostrar_info_celular(index):
+    info = celulares[index].get_info()
+    actualizar_text_area(info)
 
-Avion_American_Airlines = Avion(
-    "Personas y maletas",
-    "Entre 150 y 180 personas y más de 100 kg de equipaje",
-    "Su tamaño ronda los 38m",
-    "Airbus A320",
-    "En su mayoría blancos con azul"
-)
+def actualizar_text_area(texto):
+    text_area.config(state="normal")
+    text_area.delete("1.0", tk.END)
+    text_area.insert(tk.END, texto)
+    text_area.config(state="disabled")
 
-mi_coche_rojo = Coche("Lamborghini", "Huracán", "Rojo")
-coche_amigo = Coche("Honda", "Civic", "Azul")
 
 ventana = tk.Tk()
-ventana.title("Avión, Pastel y Coches")
-ventana.geometry("900x700")
+ventana.title("Información Unificada")
+ventana.geometry("900x800")
 ventana.configure(bg="#2c3e50")
 
-frame_aviones = tk.Frame(ventana, bg="#34495e", padx=20, pady=10)
-frame_aviones.pack(fill="x", padx=10, pady=10)
+frame_avion = tk.LabelFrame(ventana, text="Avión", fg="white", bg="#34495e", font=("Helvetica", 14, "bold"))
+frame_avion.pack(fill="x", padx=10, pady=10)
 
-tk.Label(
-    frame_aviones, text="Información del Avión",
-    font=("Helvetica", 16, "bold"), fg="white", bg="#34495e"
-).pack(pady=5)
+ttk.Button(frame_avion, text="Mostrar Avión", command=lambda: mostrar_avion(Avion_American)).pack(pady=10)
 
-ttk.Button(
-    frame_aviones, text="Mostrar Avión",
-    command=lambda: mostrar_avion(Avion_American_Airlines)
-).pack(pady=10)
+frame_pastel = tk.LabelFrame(ventana, text="Pastel", fg="white", bg="#34495e", font=("Helvetica", 14, "bold"))
+frame_pastel.pack(fill="x", padx=10, pady=10)
 
-frame_pasteles = tk.Frame(ventana, bg="#34495e", padx=20, pady=10)
-frame_pasteles.pack(fill="x", padx=10, pady=10)
+ttk.Button(frame_pastel, text="Mostrar Pastel Especial", command=mostrar_pastel).pack(pady=10)
 
-tk.Label(
-    frame_pasteles, text="Mostrar Pastel Específico",
-    font=("Helvetica", 16, "bold"), fg="white", bg="#34495e"
-).pack(pady=5)
-
-tk.Button(frame_pasteles, text="Ver Pastel", command=mostrar_pastel_especifico).pack(pady=10)
-
-frame_coches = tk.Frame(ventana, bg="#34495e", padx=20, pady=10)
+frame_coches = tk.LabelFrame(ventana, text="Coches", fg="white", bg="#34495e", font=("Helvetica", 14, "bold"))
 frame_coches.pack(fill="x", padx=10, pady=10)
 
-tk.Label(
-    frame_coches, text="Coches",
-    font=("Helvetica", 16, "bold"), fg="white", bg="#34495e"
-).pack(pady=5)
-
-etiqueta1 = tk.Label(frame_coches, text=mi_coche_rojo.mostrar_info(), font=("Arial", 10), bg="#34495e", fg="white")
+etiqueta1 = tk.Label(frame_coches, text=coche1.mostrar_info(), font=("Arial", 10), bg="#34495e", fg="white")
 etiqueta1.pack(pady=5)
 
-tk.Button(frame_coches, text="Acelerar coche rojo", command=lambda: acelerar_coche(mi_coche_rojo, etiqueta1)).pack()
-tk.Button(frame_coches, text="Frenar coche rojo", command=lambda: frenar_coche(mi_coche_rojo, etiqueta1)).pack()
+ttk.Button(frame_coches, text="Acelerar coche rojo", command=lambda: acelerar_coche(coche1, etiqueta1)).pack()
+ttk.Button(frame_coches, text="Frenar coche rojo", command=lambda: frenar_coche(coche1, etiqueta1)).pack()
 
-etiqueta2 = tk.Label(frame_coches, text=coche_amigo.mostrar_info(), font=("Arial", 10), bg="#34495e", fg="white")
+etiqueta2 = tk.Label(frame_coches, text=coche2.mostrar_info(), font=("Arial", 10), bg="#34495e", fg="white")
 etiqueta2.pack(pady=5)
 
-tk.Button(frame_coches, text="Acelerar coche azul", command=lambda: acelerar_coche(coche_amigo, etiqueta2)).pack()
-tk.Button(frame_coches, text="Frenar coche azul", command=lambda: frenar_coche(coche_amigo, etiqueta2)).pack()
+ttk.Button(frame_coches, text="Acelerar coche azul", command=lambda: acelerar_coche(coche2, etiqueta2)).pack()
+ttk.Button(frame_coches, text="Frenar coche azul", command=lambda: frenar_coche(coche2, etiqueta2)).pack()
+
+frame_celulares = tk.LabelFrame(ventana, text="Celulares", fg="white", bg="#34495e", font=("Helvetica", 14, "bold"))
+frame_celulares.pack(fill="x", padx=10, pady=10)
+
+for i, cel in enumerate(celulares):
+    ttk.Button(frame_celulares, text=cel.marca, command=lambda i=i: mostrar_info_celular(i)).pack(pady=5)
 
 text_frame = tk.Frame(ventana)
 text_frame.pack(pady=20, padx=20, fill="both", expand=True)
 
-text_area = tk.Text(
-    text_frame, wrap="word", font=("Consolas", 12),
-    bg="#ecf0f1", fg="#2c3e50", relief="flat", bd=2
-)
+text_area = tk.Text(text_frame, wrap="word", font=("Consolas", 12), bg="#ecf0f1", fg="#2c3e50")
 text_area.pack(side="left", fill="both", expand=True)
 
 scrollbar = ttk.Scrollbar(text_frame, command=text_area.yview)
 scrollbar.pack(side="right", fill="y")
 
 text_area.config(yscrollcommand=scrollbar.set)
-text_area.insert("1.0", "Da clic en un botón para mostrar información.")
+text_area.insert("1.0", "Haz clic en un botón para mostrar información.")
 text_area.config(state="disabled")
 
 ventana.mainloop()

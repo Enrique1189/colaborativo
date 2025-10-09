@@ -1,3 +1,4 @@
+##Clase ejemplo a desarrollar
 class Pastel:
     def __init__(self, tamaño, sabor, decoración, capas, tipo_glaseado, color):
         self.tamaño = tamaño         

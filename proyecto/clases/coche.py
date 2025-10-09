@@ -1,4 +1,5 @@
 ##Clase ejemplo a desarrollar
+
 import tkinter as tk
 
 class Coche:
@@ -41,13 +42,13 @@ coche_amigo = Coche("Honda", "Civic", "Azul")
 etiqueta1 = tk.Label(ventana, text=mi_coche_rojo.mostrar_info(), font=("Arial", 10))
 etiqueta1.pack(pady=5)
 
-tk.Button(ventana, text="Acelerar coche rojo", command=lambda: acelerar_coche(mi_coche_rojo, etiqueta1)).pack()
-tk.Button(ventana, text="Frenar coche rojo", command=lambda: frenar_coche(mi_coche_rojo, etiqueta1)).pack()
+tk.Button(ventana, text="Acelerar coche Rojo", command=lambda: acelerar_coche(mi_coche_rojo, etiqueta1)).pack()
+tk.Button(ventana, text="Frenar coche Rojo", command=lambda: frenar_coche(mi_coche_rojo, etiqueta1)).pack()
 
 etiqueta2 = tk.Label(ventana, text=coche_amigo.mostrar_info(), font=("Arial", 10))
 etiqueta2.pack(pady=5)
 
-tk.Button(ventana, text="Acelerar coche azul", command=lambda: acelerar_coche(coche_amigo, etiqueta2)).pack()
-tk.Button(ventana, text="Frenar coche azul", command=lambda: frenar_coche(coche_amigo, etiqueta2)).pack()
+tk.Button(ventana, text="Acelerar coche Azul", command=lambda: acelerar_coche(coche_amigo, etiqueta2)).pack()
+tk.Button(ventana, text="Frenar coche Azul", command=lambda: frenar_coche(coche_amigo, etiqueta2)).pack()
 
 ventana.mainloop()

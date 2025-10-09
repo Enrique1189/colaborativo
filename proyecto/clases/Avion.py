@@ -1,3 +1,4 @@
+##Clase ejemplo a desarrollar
 class Avion:
 
     def __init__(self, cargamento, capacidad, tamaño, modelo, color):
