@@ -17,7 +17,7 @@ class Pastel:
         print(f"Añadir glaseado de {self.tipo_glaseado} al pastel.")
     
     def servir(self):
-        print(f"Un pastel {self.color} de tamaño {self.tamaño}, con {self.capas} capas y glaseado de {self.tipo_glaseado} está por servirse. ;)")
+        print(f"Es un pastel {self.color} de tamaño {self.tamaño}, con {self.capas} capas y glaseado de {self.tipo_glaseado} está por servirse. ;)")
 
     def mostrar_info(self):
         info = (
