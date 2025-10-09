@@ -1,4 +1,3 @@
-##Clase ejemplo a desarrollar
 import tkinter as tk
 
 class Celular:
